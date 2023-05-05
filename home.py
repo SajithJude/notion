@@ -100,7 +100,7 @@ if "query_engine" not in st.session_state:
 
 
 if ask_button:
-    query_results = query_engine.query(query_text)
+    query_results = st.session_state.index.query(query_text)
     st.write("Query results:", query_results)
 
     # if not query_text:
