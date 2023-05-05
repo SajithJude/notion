@@ -47,7 +47,7 @@ if load_data_button:
             databaseindex = GPTVectorStoreIndex.from_documents(documents)
             databaseindex.storage_context.persist()
         else:
-            documents = reader.load_data(page_ids=[page_id])
+            documents = reader.load_data(page_ids=[str(page_id)])
             pageindex = GPTVectorStoreIndex.from_documents(documents)
             pageindex.storage_context.persist()
 
