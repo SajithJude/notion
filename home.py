@@ -100,13 +100,15 @@ if "query_engine" not in st.session_state:
 
 
 if ask_button:
-    if not query_text:
-        st.error("Please enter a valid query.")
-    else:
-        # Make sure the index is loaded before performing the query
-        if not query_engine:
-            st.error("Please load the index before querying.")
-        else:
-            # Perform the query and display the results
-            query_results = query_engine.query(query_text)
-            st.write("Query results:", query_results)
+    query_results = query_engine.query(query_text)
+    st.write("Query results:", query_results)
+
+    # if not query_text:
+    #     st.error("Please enter a valid query.")
+    # else:
+    #     # Make sure the index is loaded before performing the query
+    #     if not query_engine:
+    #         st.error("Please load the index before querying.")
+    #     else:
+    #         # Perform the query and display the results
+            
