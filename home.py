@@ -78,19 +78,19 @@ if load_data_button:
             pageindex = GPTVectorStoreIndex.from_documents(documents)
             pageindex.storage_context.persist()
 
-# Button to load index
-load_index_button = st.button("Load Saved Index")
+# # Button to load index
+# load_index_button = st.button("Load Saved Index")
 
-if load_index_button:
+# if load_index_button:
     # Rebuild storage context
-    storage_context = StorageContext.from_defaults(persist_dir="./storage")
-    # Load index
-    loaded_index = load_index_from_storage(storage_context)
-    query_engine = loaded_index.as_query_engine()
-    if "query_engine" not in st.session_state:
-        st.session_state.index= query_engine
-    st.success("Index loaded successfully!")
-    # st.info("Index information:", query_engine)
+        storage_context = StorageContext.from_defaults(persist_dir="./storage")
+        # Load index
+        loaded_index = load_index_from_storage(storage_context)
+        query_engine = loaded_index.as_query_engine()
+        if "query_engine" not in st.session_state:
+            st.session_state.index= query_engine
+        st.success("Index loaded successfully!")
+        # st.info("Index information:", query_engine)
 
 
 if "query_engine" not in st.session_state:
