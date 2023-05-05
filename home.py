@@ -41,7 +41,7 @@ NotionPageReader = download_loader('NotionPageReader')
 integration_token = os.getenv("NOTION_INTEGRATION_TOKEN")
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
-st.title("Notion Page Reader")
+st.title("Henry proof of concept")
 
 # Selection of Notion type
 option = st.selectbox(
