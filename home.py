@@ -8,8 +8,12 @@ import openai
 
 def extract_page_id_from_link(link: str) -> str:
     raw_page_id = link.split("/")[-1]
-    formatted_page_id = f"{raw_page_id[:8]}-{raw_page_id[8:12]}-{raw_page_id[12:16]}-{raw_page_id[16:20]}-{raw_page_id[20:]}"
-    return formatted_page_id
+    if '-' not in raw_page_id:
+        formatted_page_id = f"{raw_page_id[:8]}-{raw_page_id[8:12]}-{raw_page_id[12:16]}-{raw_page_id[16:20]}-{raw_page_id[20:]}"
+        return formatted_page_id
+    else:
+        return raw_page_id
+
 
 # documents = SimpleDirectoryReader('data').load_data()
 
