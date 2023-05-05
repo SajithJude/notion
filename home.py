@@ -47,9 +47,9 @@ if load_data_button:
         if option == "Database":
             documents = []
             for page_id in pageids:
-            documents.extend(reader.load_data(database_id=page_id))
-            databaseindex = GPTVectorStoreIndex.from_documents(documents)
-            databaseindex.storage_context.persist()
+                documents.extend(reader.load_data(database_id=page_id))
+                databaseindex = GPTVectorStoreIndex.from_documents(documents)
+                databaseindex.storage_context.persist()
         else:
             documents = reader.load_data(page_ids=pageids)
             pageindex = GPTVectorStoreIndex.from_documents(documents)
