@@ -28,31 +28,32 @@ option = st.selectbox(
 
 # Input field for ID
 # Input field for the link
-page_link = st.text_input("Enter the Notion {} link:".format(option), "")
+# Input field for the links
+page_links = st.text_area("Enter the Notion {} links (separate by comma or newline):".format(option), "")
 
 # Button to load data
 load_data_button = st.button("create index")
 
 if load_data_button:
-    if not page_link:
-        st.error("Please enter a valid Notion {} link.".format(option))
+    if not page_links:
+        st.error("Please enter valid Notion {} links.".format(option))
     else:
-        # Extract the page ID from the link
-        page_id = extract_page_id_from_link(page_link)
-        pageids = [page_id]
+        # Extract the page IDs from the links
+        links = [link.strip() for link in page_links.replace(',', '\n').split('\n') if link.strip()]
+        pageids = [extract_page_id_from_link(link) for link in links]
+
         reader = NotionPageReader(integration_token=integration_token)
 
         if option == "Database":
-            documents = reader.load_data(database_id=page_id)
+            documents = []
+            for page_id in pageids:
+                documents.extend(reader.load_data(database_id=page_id))
             databaseindex = GPTVectorStoreIndex.from_documents(documents)
             databaseindex.storage_context.persist()
         else:
-
             documents = reader.load_data(page_ids=pageids)
             pageindex = GPTVectorStoreIndex.from_documents(documents)
             pageindex.storage_context.persist()
-
-
 
 # Button to load index
 load_index_button = st.button("Load Saved Index")
