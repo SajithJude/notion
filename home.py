@@ -6,13 +6,15 @@ from llama_index import GPTVectorStoreIndex, SimpleDirectoryReader
 from llama_index import StorageContext, load_index_from_storage
 import openai 
 
+import re
+
 def extract_page_id_from_link(link: str) -> str:
-    raw_page_id = link.split("/")[-1]
-    if '-' not in raw_page_id:
-        formatted_page_id = f"{raw_page_id[:8]}-{raw_page_id[8:12]}-{raw_page_id[12:16]}-{raw_page_id[16:20]}-{raw_page_id[20:]}"
-        return formatted_page_id
+    match = re.search(r'([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})', link)
+    if match:
+        return match.group(1)
     else:
-        return raw_page_id
+        raise ValueError(f"Invalid Notion page link: {link}")
+
 
 
 # documents = SimpleDirectoryReader('data').load_data()
