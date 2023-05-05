@@ -29,9 +29,9 @@ def extract_page_id_from_link(link: str) -> str:
     page_id = reversed_page_id[::-1]
 
     # Format the page ID by inserting hyphens in the correct pattern: 8-4-4-4-12
-    formatted_page_id = f"{page_id[:8]}-{page_id[8:12]}-{page_id[12:16]}-{page_id[16:20]}-{page_id[20:]}"
+    # formatted_page_id = f"{page_id[:8]}-{page_id[8:12]}-{page_id[12:16]}-{page_id[16:20]}-{page_id[20:]}"
 
-    return formatted_page_id
+    return page_id
 
 
 # documents = SimpleDirectoryReader('data').load_data()
