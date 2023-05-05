@@ -43,11 +43,11 @@ if load_data_button:
         reader = NotionPageReader(integration_token=integration_token)
 
         if option == "Database":
-            documents = reader.load_data_from_database(database_id=page_id)
+            documents = reader.load_data(database_id=page_id)
             databaseindex = GPTVectorStoreIndex.from_documents(documents)
             databaseindex.storage_context.persist()
         else:
-            documents = reader.load_data_from_page(page_id=page_id)
+            documents = reader.load_data(page_ids=[page_id])
             pageindex = GPTVectorStoreIndex.from_documents(documents)
             pageindex.storage_context.persist()
 
