@@ -8,14 +8,30 @@ import openai
 
 import re
 def extract_page_id_from_link(link: str) -> str:
-    reversed_link = link[::-1]
-    match = re.search(r'([a-f0-9]{12}[a-f0-9]{4}[a-f0-9]{4}[a-f0-9]{4}[a-f0-9]{8})', reversed_link)
-    if match:
-        reversed_page_id = match.group(1)
-        page_id = reversed_page_id[::-1]
-        return page_id
-    else:
-        raise ValueError(f"Invalid Notion page link: {link}")
+    # Split the link into parts by '/'
+    parts = link.split("/")
+    # Take the last part which should contain the page ID
+    last_part = parts[-1]
+
+    # Reverse the last part
+    reversed_last_part = last_part[::-1]
+
+    # Initialize the reversed_page_id
+    reversed_page_id = ""
+
+    # Iterate through the reversed_last_part, and append characters until a hyphen is encountered
+    for char in reversed_last_part:
+        if char == "-":
+            break
+        reversed_page_id += char
+
+    # Reverse the reversed_page_id to get the actual page_id
+    page_id = reversed_page_id[::-1]
+
+    # Format the page ID by inserting hyphens in the correct pattern: 8-4-4-4-12
+    formatted_page_id = f"{page_id[:8]}-{page_id[8:12]}-{page_id[12:16]}-{page_id[16:20]}-{page_id[20:]}"
+
+    return formatted_page_id
 
 
 # documents = SimpleDirectoryReader('data').load_data()
