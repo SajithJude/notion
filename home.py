@@ -35,19 +35,22 @@ load_data_button = st.button("create index")
 
 if load_data_button:
     if not page_link:
-        st.error("Please enter a valid Notion {} ID.".format(option))
-        # raise RerunException(st.script_request_queue.RerunData(None))
-
-    reader = NotionPageReader(integration_token=integration_token)
-
-    if option == "Database":
-        documents = reader.load_data_from_database(database_id=page_id)
-        databseindex  = GPTVectorStoreIndex.from_documents(documents)
-        databseindex.storage_context.persist()
+        st.error("Please enter a valid Notion {} link.".format(option))
     else:
-        documents = reader.load_data_from_page(page_id=page_id)
-        pageindex  = GPTVectorStoreIndex.from_documents(documents)
-        databseindex.storage_context.persist()
+        # Extract the page ID from the link
+        page_id = extract_page_id_from_link(page_link)
+
+        reader = NotionPageReader(integration_token=integration_token)
+
+        if option == "Database":
+            documents = reader.load_data_from_database(database_id=page_id)
+            databaseindex = GPTVectorStoreIndex.from_documents(documents)
+            databaseindex.storage_context.persist()
+        else:
+            documents = reader.load_data_from_page(page_id=page_id)
+            pageindex = GPTVectorStoreIndex.from_documents(documents)
+            pageindex.storage_context.persist()
+
 
 
 # Button to load index
