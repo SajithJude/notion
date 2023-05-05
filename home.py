@@ -39,7 +39,7 @@ if load_data_button:
     else:
         # Extract the page ID from the link
         page_id = extract_page_id_from_link(page_link)
-
+        pageids = [str(page_id)]
         reader = NotionPageReader(integration_token=integration_token)
 
         if option == "Database":
@@ -47,7 +47,8 @@ if load_data_button:
             databaseindex = GPTVectorStoreIndex.from_documents(documents)
             databaseindex.storage_context.persist()
         else:
-            documents = reader.load_data(page_ids=[str(page_id)])
+
+            documents = reader.load_data(page_ids=pageids)
             pageindex = GPTVectorStoreIndex.from_documents(documents)
             pageindex.storage_context.persist()
 
