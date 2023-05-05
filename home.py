@@ -90,7 +90,7 @@ if load_index_button:
     if "query_engine" not in st.session_state:
         st.session_state.index= query_engine
     st.success("Index loaded successfully!")
-    st.info("Index information:", query_engine)
+    # st.info("Index information:", query_engine)
 
 
 if "query_engine" not in st.session_state:
