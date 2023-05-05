@@ -39,7 +39,7 @@ if load_data_button:
     else:
         # Extract the page ID from the link
         page_id = extract_page_id_from_link(page_link)
-        pageids = [str(page_id)]
+        pageids = [page_id]
         reader = NotionPageReader(integration_token=integration_token)
 
         if option == "Database":
