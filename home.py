@@ -7,14 +7,15 @@ from llama_index import StorageContext, load_index_from_storage
 import openai 
 
 import re
-
 def extract_page_id_from_link(link: str) -> str:
-    match = re.search(r'([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})', link)
+    reversed_link = link[::-1]
+    match = re.search(r'([a-f0-9]{12}[a-f0-9]{4}[a-f0-9]{4}[a-f0-9]{4}[a-f0-9]{8})', reversed_link)
     if match:
-        return match.group(1)
+        reversed_page_id = match.group(1)
+        page_id = reversed_page_id[::-1]
+        return page_id
     else:
         raise ValueError(f"Invalid Notion page link: {link}")
-
 
 
 # documents = SimpleDirectoryReader('data').load_data()
