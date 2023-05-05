@@ -6,6 +6,10 @@ from llama_index import GPTVectorStoreIndex, SimpleDirectoryReader
 from llama_index import StorageContext, load_index_from_storage
 import openai 
 
+def extract_page_id_from_link(link: str) -> str:
+    raw_page_id = link.split("/")[-1]
+    formatted_page_id = f"{raw_page_id[:8]}-{raw_page_id[8:12]}-{raw_page_id[12:16]}-{raw_page_id[16:20]}-{raw_page_id[20:]}"
+    return formatted_page_id
 
 # documents = SimpleDirectoryReader('data').load_data()
 
@@ -23,13 +27,14 @@ option = st.selectbox(
 )
 
 # Input field for ID
-page_id = st.text_input("Enter the Notion {} ID:".format(option), "")
+# Input field for the link
+page_link = st.text_input("Enter the Notion {} link:".format(option), "")
 
 # Button to load data
 load_data_button = st.button("create index")
 
 if load_data_button:
-    if not page_id:
+    if not page_link:
         st.error("Please enter a valid Notion {} ID.".format(option))
         # raise RerunException(st.script_request_queue.RerunData(None))
 
